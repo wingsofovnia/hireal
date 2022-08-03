@@ -28,6 +28,7 @@
     <link href="css/swiper.css" rel="stylesheet">
 	<link href="css/magnific-popup.css" rel="stylesheet">
 	<link href="css/styles.css?version=1" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.5/dist/cookieconsent.css" rel="stylesheet" media="print" onload="this.media='all'">
 	
 	<!-- Favicon  -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -471,14 +472,119 @@
     <script src="js/jquery.magnific-popup.js"></script> <!-- Magnific Popup for lightboxes -->
     <script src="js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script> <!-- Custom scripts -->
-    <!-- Google tag (gtag.js) -->
+
+    <!-- Google tag (gtag.js) & Cookie Banner-->
+    <script defer src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.5/dist/cookieconsent.js"></script> <!-- A lightweight & gdpr compliant cookie consent plugin written in plain javascript. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YPCXMKJ5RB"></script>
-    <script>
+    <script type="text/plain" data-cookiecategory="analytics">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'G-YPCXMKJ5RB');
+      console.log("gTag 'G-YPCXMKJ5RB' enabled");
+    </script>
+    <script>
+        window.addEventListener('load', function(){
+
+            // obtain plugin
+            var cc = initCookieConsent();
+
+            // run plugin with your configuration
+            cc.run({
+                current_lang: 'en',
+                autoclear_cookies: true,
+                page_scripts: true,
+                hide_from_bots: true,
+
+                // mode: 'opt-in'                          // default: 'opt-in'; value: 'opt-in' or 'opt-out'
+                // delay: 0,                               // default: 0
+                // auto_language: '',                      // default: null; could also be 'browser' or 'document'
+                // autorun: true,                          // default: true
+                // force_consent: false,                   // default: false
+                // hide_from_bots: false,                  // default: false
+                // remove_cookie_tables: false             // default: false
+                // cookie_name: 'cc_cookie',               // default: 'cc_cookie'
+                // cookie_expiration: 182,                 // default: 182 (days)
+                // cookie_necessary_only_expiration: 182   // default: disabled
+                // cookie_domain: location.hostname,       // default: current domain
+                // cookie_path: '/',                       // default: root
+                // cookie_same_site: 'Lax',                // default: 'Lax'
+                // use_rfc_cookie: false,                  // default: false
+                // revision: 0,                            // default: 0
+
+                onFirstAction: function(user_preferences, cookie){
+                    // callback triggered only once on the first accept/reject action
+                },
+
+                onAccept: function (cookie) {
+                    // callback triggered on the first accept/reject action, and after each page load
+                },
+
+                onChange: function (cookie, changed_categories) {
+                    // callback triggered when user changes preferences after consent has already been given
+                },
+
+                languages: {
+                    'en': {
+                        consent_modal: {
+                            title: 'We use cookies!',
+                            description: 'By continuing to visit this site, you accept the use of cookies by Google Analytics for statistical purposes. <button type="button" data-cc="c-settings" class="cc-link">Let me choose</button>',
+                            primary_btn: {
+                                text: 'Accept all',
+                                role: 'accept_all'
+                            },
+                            secondary_btn: {
+                                text: 'Reject all',
+                                role: 'accept_necessary'
+                            }
+                        },
+                        settings_modal: {
+                            title: 'Cookie preferences',
+                            save_settings_btn: 'Save settings',
+                            accept_all_btn: 'Accept all',
+                            reject_all_btn: 'Reject all',
+                            close_btn_label: 'Close',
+                            cookie_table_headers: [
+                                {col1: 'Name'},
+                                {col2: 'Domain'},
+                                {col3: 'Expiration'},
+                                {col4: 'Description'}
+                            ],
+                            blocks: [
+                                {
+                                    title: 'Cookie usage 📢',
+                                    description: 'I use cookies to ensure the basic functionalities of the website and to enhance your online experience. You can choose for each category to opt-in/out whenever you want. For more details relative to cookies and other sensitive data, please read the full <a href="#" class="cc-link">privacy policy</a>.'
+                                }, {
+                                    title: 'Analytics cookies',
+                                    description: 'These cookies allow the website to remember the choices you have made in the past',
+                                    toggle: {
+                                        value: 'analytics',
+                                        enabled: true,
+                                        readonly: false
+                                    },
+                                    cookie_table: [
+                                        {
+                                            col1: '^_ga',
+                                            col2: 'google.com',
+                                            col3: '2 years',
+                                            col4: 'description ...',
+                                            is_regex: true
+                                        },
+                                        {
+                                            col1: '_gid',
+                                            col2: 'google.com',
+                                            col3: '1 day',
+                                            col4: 'description ...',
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
